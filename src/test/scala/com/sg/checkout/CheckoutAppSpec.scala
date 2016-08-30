@@ -5,13 +5,8 @@ import org.scalatest.{FlatSpec, Matchers}
 class CheckoutAppSpec  extends FlatSpec with Matchers {
 
   "CheckoutApp" should "calculate the total cost" in {
-    val app = new TestApp()
-    app.main(Array("Apple", "Apple", "Orange", "Apple"))
-    app.totalPrice shouldBe "£2.05"
-  }
-
-  class TestApp extends CheckoutApp {
-    var totalPrice: String = _
-    override def printCheckout(price: String) = totalPrice = price
+    val app = new CheckoutApp with MockOutput
+    app.start(Array("Apple", "Apple", "Orange", "Apple"))
+    app.messages.head shouldBe "£1.45"
   }
 }
